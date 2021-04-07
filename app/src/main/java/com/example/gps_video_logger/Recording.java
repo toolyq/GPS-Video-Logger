@@ -36,6 +36,7 @@ import android.util.Log;
 import android.util.Xml;
 import android.view.Surface;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.Toast;
@@ -143,6 +144,7 @@ public class Recording extends AppCompatActivity{
         initialize_app_folder();
         initialize_camera();
         initialize_location();
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 
     @Override
