@@ -58,6 +58,6 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/camera_preview"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="300dp"
         android:layout_weight="1"></androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>
