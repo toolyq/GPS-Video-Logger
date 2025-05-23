@@ -1,11 +1,11 @@
-package app.gps_video_logger;
+package com.example.gps_video_logger;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.ThumbnailUtils;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.InputType;
 import android.util.Log;
@@ -24,7 +24,6 @@ import java.util.ArrayList;
 public class FileListAdapter extends RecyclerView.Adapter<FileListAdapter.ViewHolder> {
 
     private ArrayList<String> mDataset;
-    Context context;
 
 
     // Provide a reference to the views for each data item
@@ -46,9 +45,8 @@ public class FileListAdapter extends RecyclerView.Adapter<FileListAdapter.ViewHo
 
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public FileListAdapter(ArrayList<String> myDataset, Context myContext) {
+    public FileListAdapter(ArrayList<String> myDataset) {
         mDataset = myDataset;
-        context = myContext;
     }
 
 
@@ -71,16 +69,10 @@ public class FileListAdapter extends RecyclerView.Adapter<FileListAdapter.ViewHo
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
 
-        // Check if file exists - Sometimes race condition causes file to be dalyed in being created
-        String filePath = context.getExternalFilesDir(null)
-                + File.separator + "GPS_Video_Logger" + File.separator + mDataset.get(position) + ".mp4";
-        if(!(new File(filePath)).exists())
-            return;
-
-
         holder.mTextView.setText(mDataset.get(position));
 
-        Bitmap bMap = ThumbnailUtils.createVideoThumbnail(filePath, MediaStore.Video.Thumbnails.MINI_KIND);
+        Bitmap bMap = ThumbnailUtils.createVideoThumbnail(Environment.getExternalStorageDirectory()
+                + File.separator + "GPS_Video_Logger" + File.separator + mDataset.get(position) + ".mp4", MediaStore.Video.Thumbnails.MINI_KIND);
         holder.mImageView.setImageBitmap(bMap);
 
 
@@ -143,7 +135,7 @@ public class FileListAdapter extends RecyclerView.Adapter<FileListAdapter.ViewHo
 
 
     private void rename_file(String old_name, String new_name, int position){
-        String path = context.getExternalFilesDir(null)
+        String path = Environment.getExternalStorageDirectory()
                 + File.separator + "GPS_Video_Logger" + File.separator;
 
         if (new_name.length() > 0){

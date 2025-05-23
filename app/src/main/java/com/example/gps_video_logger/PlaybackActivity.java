@@ -1,4 +1,4 @@
-package app.gps_video_logger;
+package com.example.gps_video_logger;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,6 +10,7 @@ import android.graphics.PorterDuff;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -134,7 +135,7 @@ public class PlaybackActivity extends AppCompatActivity {
 
 
         //Location of Video File
-        Uri uri = Uri.parse(getExternalFilesDir(null) +
+        Uri uri = Uri.parse(Environment.getExternalStorageDirectory() +
                 File.separator + "GPS_Video_Logger" + File.separator + filename +".mp4");
         mVideoView.setVideoURI(uri);
         mVideoView.requestFocus();
@@ -258,11 +259,11 @@ public class PlaybackActivity extends AppCompatActivity {
 
         String gpx_filename = filename + ".gpx";
 
-        Log.d("Fileo",getExternalFilesDir(null) +
+        Log.d("Fileo",Environment.getExternalStorageDirectory() +
                 File.separator + "GPS_Video_Logger" + "/" + gpx_filename);
 
         try {
-            fis = new FileInputStream(new File( getExternalFilesDir(null) +
+            fis = new FileInputStream(new File( Environment.getExternalStorageDirectory() +
                     File.separator + "GPS_Video_Logger", gpx_filename));
             gpx_parsed = parser.parse(fis);
         } catch (IOException | XmlPullParserException e) {
@@ -408,7 +409,7 @@ public class PlaybackActivity extends AppCompatActivity {
         marker.setPosition(currentGeoPoint);
         marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
         map.getOverlays().add(marker);
-        marker.setDefaultIcon();
+        marker.setIcon(PlaybackActivity.this.getResources().getDrawable(R.drawable.center));
         prev_marker = marker;
         map.invalidate();
         get_next_location();
@@ -522,7 +523,7 @@ public class PlaybackActivity extends AppCompatActivity {
         else if (msg_code == GPX_FILE_NOT_FOUND)
             err_msg = "GPX file not Found! If you copied a new file into the app folder, ensure the video file and GPX file have the same name.";
         else if (msg_code == EMPTY_GPX_FILE)
-            err_msg = "The GPX file does not have track data. This could happen if you recorded a very short video or GPS fix was lost after commencing recording. You can still access the video file in the app folder in Android/data.";
+            err_msg = "The GPX file does not have track data. This could happen if you recorded a very short video or GPS fix was lost after commencing recording. You can still access the video file in the app folder.";
 
         // No corresponding GPX file. Ensure same name, Show alert before quit
         // Setting Dialog Title

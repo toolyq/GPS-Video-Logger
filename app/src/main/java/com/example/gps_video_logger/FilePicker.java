@@ -1,4 +1,4 @@
-package app.gps_video_logger;
+package com.example.gps_video_logger;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.os.Environment;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -39,7 +41,7 @@ public class FilePicker extends AppCompatActivity {
         filenames = FetchFileList();
 
         // specify an adapter (see also next example)
-        mAdapter = new FileListAdapter(filenames, this);
+        mAdapter = new FileListAdapter(filenames);
         recyclerView.setAdapter(mAdapter);
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
@@ -99,7 +101,7 @@ public class FilePicker extends AppCompatActivity {
 
     private void remove_file(int position){
         String remove_file = filenames.get(position);
-        String path = getExternalFilesDir(null)
+        String path = Environment.getExternalStorageDirectory()
                 + File.separator + "GPS_Video_Logger" + File.separator;
 
         File mp4_file = new File(path + remove_file + ".mp4");
@@ -119,7 +121,7 @@ public class FilePicker extends AppCompatActivity {
     private ArrayList<String> FetchFileList() {
 
         ArrayList<String> filenames = new ArrayList<String>();
-        String path = getExternalFilesDir(null)
+        String path = Environment.getExternalStorageDirectory()
                 + File.separator + "GPS_Video_Logger";
 
         File directory = new File(path);
