@@ -2,7 +2,7 @@ name: Android CI Build and Release
 
 on:
   push:
-    branches: [ master ] # <<< This line needs to change
+    branches: [ master ] # Trigger on master branch
   workflow_dispatch:
 
 jobs:
@@ -25,11 +25,8 @@ jobs:
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
         with:
-          api-level: 34 # Corresponds to compileSdkVersion
-          build-tools: "34.0.0" # Version used in successful manual build
-          # platform-tools will be installed by default
-          # cmdline-tools will be installed by default
-          # Licenses should be accepted by default by this action
+          api-level: 34 
+          build-tools: "34.0.0"
 
       - name: Cache Gradle packages
         uses: actions/cache@v3
