@@ -2,7 +2,7 @@ name: Android CI Build and Release
 
 on:
   push:
-    branches: [ main ]
+    branches: [ master ] # <<< This line needs to change
   workflow_dispatch:
 
 jobs:
