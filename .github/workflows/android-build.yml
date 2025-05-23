@@ -45,7 +45,7 @@ jobs:
         run: ./gradlew :app:clean :app:assembleRelease
 
       - name: Upload Build Artifact (APK)
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4 # <<< This line needs to change
         with:
           name: apk
           path: app/build/outputs/apk/release/app-release-unsigned.apk
